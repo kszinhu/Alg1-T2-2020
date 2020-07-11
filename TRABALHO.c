@@ -38,6 +38,63 @@ FUNCOES [\] AlgI - T2 - 2020
 int L=0,C=0;
 int nome[50];
 char tecla;
+/* > ---------------------------=* TELAS *=---------------------------- <*/
+void tela_loading(){
+    int i,j;
+    for (i=1;i<3;i++){
+        printf("Carregando [%d%%] ",(i*50));
+        for (j=0;j<10;j++){
+            printf("<>");
+            Sleep(100);
+        }
+        printf("\r");
+        for (j=0;j<40;j++){
+            printf(" "); /* Apaga a linha anterior */
+        }
+        printf("\r");
+    }
+}
+/*> ******************************************************************** <*/
+void tela_de_inicio(){
+    printf("\t.----------------------------------------------------------------------------------.\n");
+    printf("\t|                                TRABALHO FUNCOES                                  |\n");
+    printf("\t|                          ------------------------------                          |\n");
+    printf("\t|                         ________________________________                         |\n");
+    printf("\t|                        |   TEMA: MATRIZES               |                        |\n");
+    printf("\t|                        |      DESENVOLVIDO POR          |                        |\n");
+    printf("\t|                        |            CASSIANO RODRIGUES  |                        |\n");
+    printf("\t|                        |________________________________|                        |\n");
+    printf("\t|                                                                                  |\n");
+    printf("\t`----------------------------------------------------------------------------------`\n");
+    printf("\t                                 < Digite seu nome >                               \n");
+    printf("\t                              -> ");
+    gets(nome);
+    system("cls");
+}
+/*> ******************************************************************** <*/
+void tela_de_funcoes(){
+    printf("\tOLA, \"%s\" ESCOLHA A FUNCAO QUE DESEJA UTILIZAR:\n",nome);
+    printf("\t.----------------------------------------------------------------------------------------.\n");
+    printf("\t|                                        FUNCOES                                         |\n");
+    printf("\t|                            ------------------------------                              |\n");
+    printf("\t|  ___________________                                          __________________       |\n");
+    printf("\t| |    -ELEMENTOS-    |                                        |  -VERIFICACOES-  |      |\n");
+    printf("\t| | TROCA DE LINHAS   | [  ]                                   | SIMETRICA        | [  ] |\n");
+    printf("\t| | TROCA DE COLUNAS  | [  ]                                   | QUADRADO MAGICO  | [  ] |\n");
+    printf("\t| | TROQUE DIAGONAIS  | [  ]                                   | QUADRADO LATINO  | [  ] |\n");
+    printf("\t| | TROCAR ELEMENTOS  | [  ]                                   | PERMUTACAO       | [  ] |\n");
+    printf("\t| |___________________|                                        |__________________|      |\n");
+    printf("\t|                                                                                        |\n");
+    printf("\t`----------------------------------------------------------------------------------------`\n");
+    printf("\t < TECLE F1 PARA AJUDA >                                         < TECLE ESC PARA SAIR > \n");
+}
+/*> ******************************************************************** <*/
+void tela_quadrada(){
+    printf("\t-----------------------------------------[AVISO]-----------------------------------------\n");
+    printf("\t                                SUA MATRIZ NAO EH QUADRADA                               \n");
+    printf("\t-----------------------------------------------------------------------------------------\n");
+}
+/*> ******************************************************************** <*/
 void tela_propriedades(){
     printf("\t-----------------------------------------------------------------------------------------\n");
     printf("\t                 PROPRIEDADE                |                 BOOLEANO                   \n");
@@ -149,65 +206,55 @@ bool simetrica(int matriz[L][C]){
             }
         }
     }
+    tela_quadrada();
+    return false;
 }
 /*> ******************************************************************** <*/
 bool quadrado_magico(int matriz[L][C]){
-    if((matriz_quadrada(matriz))==true){
-        int i,j,aux_soma;
-        int soma_l[C],soma_c[L];
-        int soma_d_principal=0,soma_d_secundaria=0;
+    if((matriz_quadrada(matriz))==true){ /* Linha = Coluna  */
+        int i,j,aux_soma,soma=0,soma_diagonal=0;
         tela_propriedades();
         for (i=0;i<L;i++){
+            aux_soma=0; /* Limpa soma da Linha */
             for (j=0;j<C;j++){
                 aux_soma+=matriz[i][j];
+                if(i==j){
+                    soma_diagonal+=matriz[i][j];
+                }
             }
-            soma_l[i]=aux_soma;
+            if(soma==0){
+                soma=aux_soma;
+            }
+            if(aux_soma!=soma){ /* Verifica com a linha i, se for diferente nao eh quadrado magico */
+                return false;
+            }
         }
-        aux_soma=0;
-        for (i=0;i<C;i++){
-            for (j=0;j<L;j++){
+        
+        if(soma_diagonal!=soma){ /* Verifica com a diagonal principal , se for diferente nao eh quadrado magico */
+            return false;
+        }
+        soma_diagonal=0;
+        
+        for (j=0;j<C;j++){
+            aux_soma=0;
+            for (i=0;i<L;i++){
                 aux_soma+=matriz[i][j];
-            }
-            soma_c[i]=aux_soma;
-        }
-        aux_soma=0;
-
-        /* >------------------------< */
-
-        for (i=0;i<L;i++){
-            for (j=0;j<C;j++){
-                if (i==j){
-                    aux_soma+=matriz[i][j];
+                if(j==(C-1-i)){
+                    soma_diagonal+=matriz[i][j];
                 }
             }
+            if(aux_soma!=soma){ /* Verifica com a coluna j, se for diferente nao eh quadrado magico */
+                return false;
+            }
         }
-        soma_d_principal=aux_soma;
-        aux_soma=0;
-
-        for (i=0,j=(C-1);i<L;i++,j--){
-            aux_soma+=matriz[i][j];
-        }
-        soma_d_secundaria=aux_soma;
-        aux_soma=0;
-        /* > ------------ SOMA DIAGONAIS ------------- < */
-
-        if (soma_d_principal!=soma_d_secundaria){
-            return false;
-        }
-        /* > ----------- SOMA LINHA/COLUNA------------ < */
-        for (i=0;i<L;i++){
-            for (j=0;j<C;j++){
-                if (soma_l[i]=!soma_c[j]){
-                    return false;
-                }
-            }   
-        }  
-        /* > ----------- SOMA DIAGONAL/LINHA------------ < */
-        if (soma_c[0]!=soma_d_secundaria){
-            return false;
+        
+        if(soma_diagonal!=soma){ /* Verifica com a diagonal secundaria , se for diferente nao eh quadrado magico */
+                return false;
         }
         return true;
     }
+    tela_quadrada();
+    return false;
 }
 /*> ******************************************************************** <*/
 bool quadrado_latino(int matriz[L][C]){
@@ -252,62 +299,13 @@ bool quadrado_latino(int matriz[L][C]){
         }
         return 1;
     }
+    tela_quadrada();
+    return false;
 }
-/* > ---------------------------=* TELAS *=---------------------------- <*/
-void tela_loading(){
-    int i,j;
-    for (i=1;i<3;i++){
-        printf("Carregando [%d%%] ",(i*50));
-        for (j=0;j<10;j++){
-            printf("<>");
-            Sleep(100);
-        }
-        printf("\r");
-        for (j=0;j<40;j++){
-            printf(" "); /* Apaga a linha anterior */
-        }
-        printf("\r");
-    }
-}
-/*> ******************************************************************** <*/
-void tela_de_inicio(){
-    printf("\t.----------------------------------------------------------------------------------.\n");
-    printf("\t|                                TRABALHO FUNCOES                                  |\n");
-    printf("\t|                          ------------------------------                          |\n");
-    printf("\t|                         ________________________________                         |\n");
-    printf("\t|                        |   TEMA: MATRIZES               |                        |\n");
-    printf("\t|                        |      DESENVOLVIDO POR          |                        |\n");
-    printf("\t|                        |            CASSIANO RODRIGUES  |                        |\n");
-    printf("\t|                        |________________________________|                        |\n");
-    printf("\t|                                                                                  |\n");
-    printf("\t`----------------------------------------------------------------------------------`\n");
-    printf("\t                                 < Digite seu nome >                               \n");
-    printf("\t                              -> ");
-    gets(nome);
-    system("cls");
-}
-/*> ******************************************************************** <*/
-void tela_de_funcoes(){
-    printf("\tOLA, \"%s\" ESCOLHA A FUNCAO QUE DESEJA UTILIZAR:\n",nome);
-    printf("\t.----------------------------------------------------------------------------------------.\n");
-    printf("\t|                                        FUNCOES                                         |\n");
-    printf("\t|                            ------------------------------                              |\n");
-    printf("\t|  ___________________                                          __________________       |\n");
-    printf("\t| |    -ELEMENTOS-    |                                        |  -VERIFICACOES-  |      |\n");
-    printf("\t| | TROCA DE LINHAS   | [  ]                                   | SIMETRICA        | [  ] |\n");
-    printf("\t| | TROCA DE COLUNAS  | [  ]                                   | QUADRADO MAGICO  | [  ] |\n");
-    printf("\t| | TROQUE DIAGONAIS  | [  ]                                   | QUADRADO LATINO  | [  ] |\n");
-    printf("\t| | TROCAR ELEMENTOS  | [  ]                                   | PERMUTACAO       | [  ] |\n");
-    printf("\t| |___________________|                                        |__________________|      |\n");
-    printf("\t|                                                                                        |\n");
-    printf("\t`----------------------------------------------------------------------------------------`\n");
-    printf("\t < TECLE F1 PARA AJUDA >                                       < TECLE ESC PARA SAIR >    \n");
-}
-/*> ******************************************************************** <*/
+/* > --------------------=* FUNCOES FUNCIONAMENTO *=------------------- <*/
 void escolha(int matriz[L][C]){
     int tecla,x=34,y=7;
     char opcao;
-
     do{
 	    tecla=getch(); //capturamos a tecla digitada
 		switch(tecla){
@@ -397,7 +395,7 @@ void escolha(int matriz[L][C]){
                                     printf("\t             > MATRIZ SIMETRICA                              VERDADEIRO\n");
                                 }
 						        else{
-                                    printf("\t             > MATRIZ SIMETRICA                                 FALSO   \n");
+                                    printf("\t             > MATRIZ SIMETRICA                                FALSO   \n");
                                 }
                             }
 					 	    break;
@@ -480,63 +478,6 @@ main(){
     system("cls");
     tela_de_funcoes();
     escolha(matriz);
-
-
-    /* if(tecla==F2){
-        trocar_linha(matriz);
-        mostrar_matriz(matriz);
-    }
-    else if(tecla==F3){
-        trocar_coluna(matriz);
-        mostrar_matriz(matriz);
-    }
-    else if(tecla==F4){
-        diagonal(matriz);
-        mostrar_matriz(matriz);
-    } */
-
-    // tela_propriedades();
-
-    /* else if(tecla==F5){
-        tela_propriedades();
-        if((simetrica(matriz))==true){
-            printf("\t             > MATRIZ SIMETRICA                             VERDADEIRO\n");
-        }
-        else{
-            printf("\t             > MATRIZ SIMETRICA                                  FALSO\n");
-        }
-    }
-    else if(tecla==F6){
-        tela_propriedades();
-        if((quadrado_magico(matriz))==true){
-            printf("\t             > QUADRADO MAGICO                             VERDADEIRO\n");
-        }
-        else{
-            printf("\t             > QUADRADO MAGICO                                   FALSO\n");
-        }
-    }
-    else if(tecla==F7){
-        tela_propriedades();
-        if((quadrado_latino(matriz))==true){
-            printf("\t             > QUADRADO LATINO                              VERDADEIRO\n");
-        }
-        else{
-            printf("\t             > QUADRADO LATINO                                   FALSO\n");
-        }
-    }
-    else if(tecla==F8){
-        tela_propriedades();
-        if((matriz_quadrada(matriz))==true){
-            printf("\t             > QUADRADO LATINO                              VERDADEIRO\n");
-        }
-        else{
-            printf("\t             > QUADRADO LATINO                                   FALSO\n");
-        }
-    } */
-    
-    /*
-    * trocar_coluna(matriz);
-    * mostrar_matriz(matriz);
-    */
+    /* tela_final(); */
 
 system("pause");}
