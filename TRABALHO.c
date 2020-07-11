@@ -56,7 +56,7 @@ void maiuscula(char *frase){
 }
 /*> ******************************************************************** <*/
 void ler_matriz(int matriz[L][C]){
-    printf("\t > DIGITE SUA MATRIZ\n",nome);
+    printf("\t > DIGITE SUA MATRIZ\n");
     int i,j;
     for (i=0;i<L;i++){
         for (j=0;j<C;j++){
@@ -153,7 +153,7 @@ bool simetrica(int matriz[L][C]){
 /*> ******************************************************************** <*/
 bool quadrado_magico(int matriz[L][C]){
     if((matriz_quadrada(matriz))==true){
-        int i,j,aux_soma,sair=0;
+        int i,j,aux_soma;
         int soma_l[C],soma_c[L];
         int soma_d_principal=0,soma_d_secundaria=0;
         tela_propriedades();
@@ -271,7 +271,6 @@ void tela_loading(){
 }
 /*> ******************************************************************** <*/
 void tela_de_inicio(){
-    int i;
     printf("\t.----------------------------------------------------------------------------------.\n");
     printf("\t|                                TRABALHO FUNCOES                                  |\n");
     printf("\t|                          ------------------------------                          |\n");
@@ -289,8 +288,6 @@ void tela_de_inicio(){
 }
 /*> ******************************************************************** <*/
 void tela_de_funcoes(){
-    int tecla,x=34,y=7;
-    char opcao;
     printf("\tOLA, \"%s\" ESCOLHA A FUNCAO QUE DESEJA UTILIZAR:\n",nome);
     printf("\t.----------------------------------------------------------------------------------------.\n");
     printf("\t|                                        FUNCOES                                         |\n");
