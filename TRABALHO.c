@@ -95,8 +95,6 @@ void trocar_linha(int matriz[L][C]){
         matriz[x][i]=matriz[y][i];
         matriz[y][i]=temp;
     }
-    mon_bijou();
-    mostrar_matriz(matriz);
 }
 /*> ******************************************************************** <*/
 void trocar_coluna(int matriz[L][C]){
@@ -116,8 +114,6 @@ void trocar_coluna(int matriz[L][C]){
         matriz[i][x]=matriz[i][y];
         matriz[i][y]=temp;
     }
-    mon_bijou();
-    mostrar_matriz(matriz);
 }
 /*> ******************************************************************** <*/
 void diagonal(int matriz[L][C]){
@@ -127,7 +123,6 @@ void diagonal(int matriz[L][C]){
         matriz[i][i]=matriz[i][j];
         matriz[i][j]=temp;
     }
-    mostrar_matriz(matriz);
 }
 /* > --------------------=* FUNCOES VERIFICACAO *=---------------------- <*/
 bool matriz_quadrada(){
@@ -293,8 +288,9 @@ void tela_de_inicio(){
     system("cls");
 }
 /*> ******************************************************************** <*/
-void tela_de_funcoes(int matriz[L][C]){
+void tela_de_funcoes(){
     int tecla,x=34,y=7;
+    char opcao;
     printf("\tOLA, \"%s\" ESCOLHA A FUNCAO QUE DESEJA UTILIZAR:\n",nome);
     printf("\t.----------------------------------------------------------------------------------------.\n");
     printf("\t|                                        FUNCOES                                         |\n");
@@ -309,6 +305,11 @@ void tela_de_funcoes(int matriz[L][C]){
     printf("\t|                                                                                        |\n");
     printf("\t`----------------------------------------------------------------------------------------`\n");
     printf("\t < TECLE F1 PARA AJUDA >                                       < TECLE ESC PARA SAIR >    \n");
+}
+/*> ******************************************************************** <*/
+void escolha(int matriz[L][C]){
+    int tecla,x=34,y=7;
+    char opcao;
 
     do{
 	    tecla=getch(); //capturamos a tecla digitada
@@ -353,32 +354,50 @@ void tela_de_funcoes(int matriz[L][C]){
 		 		putchar('<');
                 break;
 		 	case ENTER: /* > Se pressionarmos a tecla ENTER < */
+                system("cls");
+                tela_de_funcoes();
 			 	if(x==34){
                     switch(y){ /* > posição no eixo Y < */
 				 	    case 7:
-                            mon_bijou();
-					 	    trocar_linha(matriz);
-					 	    break;
+                            gotoxy(1,16);{
+					 	        trocar_linha(matriz);
+                                mostrar_matriz(matriz);
+                                printf("\t [] ASSIM QUE DESEJAR SAIR, USE AS SETAS PARA MOVER\n");
+                                opcao=getch();
+                            }
+                            break;
 					    case 8:
-                            mon_bijou();
-						    trocar_coluna(matriz);
-						    break;
+                            gotoxy(1,16);{
+						        trocar_coluna(matriz);
+                                mostrar_matriz(matriz);
+                                printf("\t [] ASSIM QUE DESEJAR SAIR, USE AS SETAS PARA MOVER\n");
+                                opcao=getch();
+                            }
+                            break;
 					    case 9:
-                            mon_bijou();
-						    diagonal(matriz);
+                            gotoxy(1,16);{
+						        diagonal(matriz);
+                                mostrar_matriz(matriz);
+                                printf("\t [] ASSIM QUE DESEJAR SAIR, USE AS SETAS PARA MOVER\n");
+                                opcao=getch();
+                            }
                             break;
                         case 10:
-                            mon_bijou();
-						    ler_matriz(matriz);
+                            gotoxy(1,16);{
+						        ler_matriz(matriz);
+                                mostrar_matriz(matriz);
+                                printf("\t [] ASSIM QUE DESEJAR SAIR, USE AS SETAS PARA MOVER\n");
+                                opcao=getch();
+                            }
                             break;
 				    }
                 }
                 if(x==94){
                     switch(y){ /* > posição no eixo Y < */
 				 	    case 7:
-                            gotoxy(1,14);{
+                            gotoxy(1,16);{
 					 	        if((simetrica(matriz))==true){
-                                    printf("\t             > MATRIZ SIMETRICA                               VERDADEIRO\n");
+                                    printf("\t             > MATRIZ SIMETRICA                              VERDADEIRO\n");
                                 }
 						        else{
                                     printf("\t             > MATRIZ SIMETRICA                                 FALSO   \n");
@@ -386,7 +405,7 @@ void tela_de_funcoes(int matriz[L][C]){
                             }
 					 	    break;
 					    case 8:
-                            gotoxy(1,14);{
+                            gotoxy(1,16);{
                                 if((quadrado_magico(matriz))==true){
                                     printf("\t             > QUADRADO MAGICO                               VERDADEIRO\n");
                                 }
@@ -396,7 +415,7 @@ void tela_de_funcoes(int matriz[L][C]){
                             }
 						    break;
 					    case 9:
-                            gotoxy(1,14);{
+                            gotoxy(1,16);{
                                 if((quadrado_latino(matriz))==true){
                                     printf("\t             > QUADRADO LATINO                               VERDADEIRO\n");
                                 }
@@ -412,11 +431,18 @@ void tela_de_funcoes(int matriz[L][C]){
                             break; */
 				    }
                 }
-		 	default:
+                break;
+		 	case F1:
+                system("cls");
+                tela_de_funcoes();
+                gotoxy(1,16);
+                printf("\t[ AJUDA ]\n\t\t[] Eu ainda vou escrever algo aqui"); /* AVISOOO */
+                break;
+            default:
 		 		break;
 		}
 		
-	}while(1<2); //nossa condição para continuar o loop
+	}while(tecla!=ESC); //nossa condição para continuar o loop
 
     // if(kbhit){
     //     tecla = getch();
@@ -455,7 +481,8 @@ main(){
     /* - INTERFACE - */
     tela_loading();
     system("cls");
-    tela_de_funcoes(matriz);
+    tela_de_funcoes();
+    escolha(matriz);
 
 
     /* if(tecla==F2){
