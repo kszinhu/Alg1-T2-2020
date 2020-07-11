@@ -10,7 +10,7 @@ Interface de Matriz com Funções, Trabalho realizado na disciplina de Algoritmo
 	  > Calculadora < 
 </h4>
   <p align="center">	
-    <a href="https://www.codacy.com/manual/kszinhu/Calculadora_Trigonometrica?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kszinhu/Calculadora_Trigonometrica&amp;utm_campaign=Badge_Grade)"><img src="https://app.codacy.com/project/badge/Grade/7f56dc28884848518df53a4468be20ae"/></a>
+    <a href="https://www.codacy.com/manual/kszinhu/Alg1-T2-2020?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kszinhu/Alg1-T2-2020&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/3f2b331d660143c0a909f9a07f7d6c02"/></a>
   <img alt="Repository Size/Tamanho do Repositorio" src="https://img.shields.io/github/repo-size/kszinhu/Alg1-T2-2020">
   
   <a href="https://github.com/kszinhu/URI-RESPOSTAS/commits/master">
